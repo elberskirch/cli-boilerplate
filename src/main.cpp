@@ -12,21 +12,30 @@ int main(int argc, char** argv) {
   app.add_option("-d,--day", day, "Day of the challenge to run")->required();
   std::string filename;
   app.add_option("-i,--input", filename, "input file name")->required();
+  bool verbose{false};
+  app.add_flag("-v,--verbose", verbose, "Enable verbose output");
 
   // Parse command line arguments
   CLI11_PARSE(app, argc, argv);
 
   switch (day) {
   case 01: {
-    aoc2025::day1::Dial dial;
+    aoc2025::day1::Dial dial1;
+    aoc2025::day1::Dial dial2(true);
     std::string fileContent = util::loadFileAsString(filename);
-    dial.setPosition(50);
+    dial1.setPosition(50);
+    dial2.setPosition(50);
     auto operations = util::strToVector(fileContent);
     for (const auto& op : operations) {
-      std::cout << "Position: " << dial.getPosition() << " - Operation: " << op << std::endl;
-      dial.turn(op);
+      // std::cout << "Position: " << dial.getPosition() << " - Operation: " << op << std::endl;
+      dial1.turn(op);
+      dial2.turn(op);
+      if (verbose)
+        std::cout << "Operation: " << op << " Position: " << dial2.getPosition()
+                  << " - Clicks: " << dial2.getClicks() << std::endl;
     }
-    std::cout << "Final Password: " << dial.getClicks() << std::endl;
+    std::cout << "Final Password Dial 1: " << dial1.getClicks() << std::endl;
+    std::cout << "Final Password Dial 2: " << dial2.getClicks() << std::endl;
     break;
   }
   default:

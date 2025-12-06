@@ -91,24 +91,85 @@ TEST_CASE("2025 - Day 1 - Dial - Beyond 100 steps Operations", "[dial]") {
 
 TEST_CASE("2025 - Day 1 - Dial - Count All Clicks", "[dial]") {
     Dial dial(true); // Enable counting all clicks
-    std::vector<std::string> operations{
-        "L68",
-        "L30",
-        "R48",
-        "L5",
-        "R60",
-        "L55",
-        "L1",
-        "L99",
-        "R14",
-        "L82"
-    };
 
     dial.setPosition(50);
     REQUIRE(dial.getPosition() == 50);
 
-    for (const auto& op : operations) {
-        dial.turn(op);
-    }
+    dial.turn("L68");
+    REQUIRE(dial.getClicks() == 1);
+    REQUIRE(dial.getPosition() == 82);
+
+    dial.turn("L30");
+    REQUIRE(dial.getClicks() == 1); 
+    REQUIRE(dial.getPosition() == 52);
+
+    dial.turn("R48");
+    REQUIRE(dial.getClicks() == 2);
+    REQUIRE(dial.getPosition() == 0);
+
+    dial.turn("L5");
+    REQUIRE(dial.getClicks() == 2);  
+    REQUIRE(dial.getPosition() == 95);
+
+    dial.turn("R60");
+    REQUIRE(dial.getClicks() == 3);
+    REQUIRE(dial.getPosition() == 55);  
+
+    dial.turn("L55");
+    REQUIRE(dial.getClicks() == 4);  
+    REQUIRE(dial.getPosition() == 0);
+
+    dial.turn("L1");
+    REQUIRE(dial.getClicks() == 4); 
+    REQUIRE(dial.getPosition() == 99);
+
+    dial.turn("L99");  
+    REQUIRE(dial.getClicks() == 5); 
+    REQUIRE(dial.getPosition() == 0);
+
+    dial.turn("R14");
+    REQUIRE(dial.getClicks() == 5); 
+    REQUIRE(dial.getPosition() == 14);
+
+    dial.turn("L82");
     REQUIRE(dial.getClicks() == 6);
+    REQUIRE(dial.getPosition() == 32);
+
+    dial.setPosition(50);
+    dial.turn("R1000");
+    REQUIRE(dial.getClicks() == 10);
+    REQUIRE(dial.getPosition() == 50);
+
+    dial.setPosition(50);
+    dial.turn("L1000");
+    REQUIRE(dial.getClicks() == 10);
+    REQUIRE(dial.getPosition() == 50);
+
+    dial.turn("L50");
+    REQUIRE(dial.getClicks() == 11);
+    REQUIRE(dial.getPosition() == 0);
+
+    dial.turn("R1");
+    REQUIRE(dial.getClicks() == 11);
+    REQUIRE(dial.getPosition() == 1);
+
+    dial.turn("L1");
+    REQUIRE(dial.getClicks() == 12);
+    REQUIRE(dial.getPosition() == 0);
+
+    dial.turn("L1");;
+    REQUIRE(dial.getClicks() == 12);
+    REQUIRE(dial.getPosition() == 99);
+
+    dial.turn("R1");;
+    REQUIRE(dial.getClicks() == 13);
+    REQUIRE(dial.getPosition() == 0);
+
+    dial.turn("R100");;
+    REQUIRE(dial.getClicks() == 14);
+    REQUIRE(dial.getPosition() == 0);
+
+    dial.turn("R1");
+    REQUIRE(dial.getClicks() == 14);
+    REQUIRE(dial.getPosition() == 1);
 }

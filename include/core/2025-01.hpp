@@ -35,10 +35,21 @@ public:
   }
 
   void turnLeft(int steps) {
+    if (countAllClicks) {
+      if ((position - steps) <= 0) {
+        incrementClicks((steps - position) / 100);
+        if (position != 0) {
+          incrementClicks(1);
+        }
+      }
+    }
     position = (100 + (position - (steps % 100))) % 100;
   }
 
   void turnRight(int steps) {
+    if (countAllClicks) {
+      incrementClicks((position + steps) / 100);
+    }
     position = (position + steps) % 100;
   }
 
@@ -57,10 +68,8 @@ public:
       throw std::invalid_argument("Invalid turn direction");
     }
 
-    if (getPosition() == 0) {
-      if (!countAllClicks) {
-        incrementClicks(1);
-      }
+    if (getPosition() == 0 && !countAllClicks) {
+      incrementClicks(1);
     }
   }
 };
