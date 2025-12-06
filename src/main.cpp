@@ -1,4 +1,6 @@
 #include <CLI/CLI.hpp>
+#include <core/2025-01.hpp>
+#include <core/util.hpp>
 #include <iostream>
 #include <string>
 
@@ -6,28 +8,30 @@ int main(int argc, char** argv) {
   CLI::App app{"CLI Boilerplate Application"};
   app.set_version_flag("--version", "0.1.0");
 
-  // Command line options
-  bool verbose = false;
-  app.add_flag("-v,--verbose", verbose, "Enable verbose output");
-
-  std::string name;
-  app.add_option("-n,--name", name, "Your name")->default_val("World");
-
-  int count = 1;
-  app.add_option("-c,--count", count, "Number of times to repeat")->check(CLI::PositiveNumber);
+  int day = 0;
+  app.add_option("-d,--day", day, "Day of the challenge to run")->required();
+  std::string filename;
+  app.add_option("-i,--input", filename, "input file name")->required();
 
   // Parse command line arguments
   CLI11_PARSE(app, argc, argv);
 
-  // Application logic
-  if (verbose) {
-    std::cout << "Verbose mode enabled" << std::endl;
-    std::cout << "Arguments parsed successfully" << std::endl;
+  switch (day) {
+  case 01: {
+    aoc2025::day1::Dial dial;
+    std::string fileContent = util::loadFileAsString(filename);
+    dial.setPosition(50);
+    auto operations = util::strToVector(fileContent);
+    for (const auto& op : operations) {
+      std::cout << "Position: " << dial.getPosition() << " - Operation: " << op << std::endl;
+      dial.turn(op);
+    }
+    std::cout << "Final Password: " << dial.getClicks() << std::endl;
+    break;
   }
-
-  for (int i = 0; i < count; ++i) {
-    std::cout << "Hello, " << name << "!" << std::endl;
+  default:
+    std::cerr << "Day not implemented: " << day << std::endl;
+    return 1;
   }
-
   return 0;
 }

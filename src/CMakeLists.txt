@@ -1,14 +1,18 @@
 # Main executable configuration
 
+# Add core library subdirectory
+add_subdirectory(core)
+
 # Define the executable
 add_executable(${PROJECT_NAME}
     main.cpp
 )
 
-# Link against CLI11
+# Link against CLI11 and core library
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         CLI11::CLI11
+        core
 )
 
 # Include directories for project headers
@@ -23,7 +27,3 @@ if(MSVC)
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
 endif()
-
-# Future: Add core library when functionality is added
-# add_subdirectory(core)
-# target_link_libraries(${PROJECT_NAME} PRIVATE core)

@@ -13,3 +13,11 @@ CPMAddPackage(
         "CLI11_BUILD_TESTS OFF"
         "CLI11_BUILD_EXAMPLES OFF"
 )
+
+# Catch2 - Modern C++ test framework
+# https://github.com/catchorg/Catch2
+CPMAddPackage(
+    NAME Catch2
+    GITHUB_REPOSITORY catchorg/Catch2
+    VERSION 3.5.2
+)

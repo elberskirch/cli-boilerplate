@@ -8,7 +8,7 @@ project(
 )
 
 # Set C++ standard
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -26,3 +26,7 @@ include(cmake/ClangFormat.cmake)
 
 # Add source directory
 add_subdirectory(src)
+
+# Enable testing and add tests subdirectory
+enable_testing()
+add_subdirectory(tests)
